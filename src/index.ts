@@ -1,4 +1,6 @@
-import words from "./words/svenska";
+import { sv } from "./words";
+
+const words = new Map<string, string>(sv);
 
 const getRandomWord = (except?: Set<string>) => {
   const keys = [...words.keys()];
@@ -64,12 +66,12 @@ window.addEventListener("DOMContentLoaded", async () => {
       li.innerText = words.get(currentWord);
       li.onclick = () => {
         if (isCorrectAnswer) {
+          li.onclick = () => {};
           li.innerText = "✅";
           const delta = Math.ceil((Math.max(3 - tries, 0) * word.length) / 3);
           scoreBoard.innerHTML = `<em>+${delta}</em>`;
           stats.score += delta;
           stats.correct++;
-          li.onclick = () => {};
           return onAnsweredCorrectly();
         }
         li.innerText = "❌";
@@ -78,8 +80,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       usedWords.add(currentWord);
       list.appendChild(li);
     }
-    console.log(usedWords);
   };
-
   newQuestion();
 });
