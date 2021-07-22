@@ -39,6 +39,20 @@ window.addEventListener("DOMContentLoaded", async () => {
     "font-size:3rem;margin-top:3rem; font-weight:bold; font:monospace;color:teal;"
   );
   document.body.appendChild(scoreBoard);
+  let word;
+  const removeButton = document.createElement("button");
+  removeButton.setAttribute(
+    "style",
+    "font-size:3rem;margin-top:5rem; margin:5rem auto 0 auto;"
+  );
+  removeButton.innerText = "🗑";
+  removeButton.onclick = () => {
+    if (confirm(`Are you sure you want to remove word "${word}"?`)) {
+      words.delete(word);
+      newQuestion();
+    }
+  };
+  document.body.appendChild(removeButton);
 
   let timer;
   const onAnsweredCorrectly = () => {
@@ -50,7 +64,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     stats.words++;
     scoreBoard.innerText = stats.score.toString();
     let tries = 0;
-    const word = getRandomWord();
+    word = getRandomWord();
     text.innerText = word;
     list.innerHTML = "";
     const correctAnswer = Math.floor(Math.random() * 3);
